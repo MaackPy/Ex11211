@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+#Solicita ao usuario um diretorio
+echo "Insira o caminho do diretório:"
+read diretorio
+
+# verifica se existe o diretorio
+if [ ! -d "$diretorio" ]; then
+  echo "Erro: Diretório não existe."
+  exit
+fi
+
+# Entra no diretorio ou mostra erro se nao encontrar
+cd "$diretorio" || { echo "Erro: Não foi possível entrar no diretório."; exit; }
+
+# Mostra o conteudo do diretorio
+echo "Conteúdo do diretório atual:"
+ls
+
+# Ve se nao tem e cria o diretorio
+if [ ! -d "backup" ]; then
+  mkdir backup
+  echo "Diretório 'backup' criado."
+else
+  echo "Diretório 'backup' já existe."
+fi
+
+# Move todos os arquivos.txt para backup
+mv *.txt backup/ 2>/dev/null && echo "Arquivos.txt movidos para backup com sucesso!" || echo "Nenhum arquivo.txt encontrado ou erro ao mover."
